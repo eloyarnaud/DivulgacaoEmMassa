@@ -86,7 +86,7 @@ void imprimeLista(Lista *lst)
 {
     int i;
     for(i = 0; i <= lst->tamanho-1; i++){
-       printf("\n\n%d Nome: %s \n E-mail: %s   \n Telefone = %s",
+       printf("\n\n%dº Usuário: \n\nNome: %s \n E-mail: %s   \n Telefone = %s",
                i+1, lst->usuario[i].nome, lst->usuario[i].email,lst->usuario[i].telefone);
     }
     

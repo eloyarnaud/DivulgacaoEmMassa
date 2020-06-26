@@ -16,16 +16,16 @@ void main ()
     int posicao,op,tamanho;
     int codErro;
     char continua;
+    char mensagem[1000];
 
 do{
     cabecalho();
     menu();
     op = getch();
     system("cls");
-
+	int contador=0;
     switch (op)
     {
-
 
         case '1':
         {
@@ -58,11 +58,12 @@ do{
                         printf("\n\nPreencha o campo corretamente.");
                     }
                 }while(strlen(usuario.telefone) != 11);
-                
+                contador ++;    
 				insereLista(usuario,&lista,&codErro);
                 imprimeLista(&lista);
-
-                printf("\n\nDeseja continuar?[S/N]");
+                printf("\n\nUsuário Cadastrado com sucesso.");
+                printf("\n\nNúmero de usuário cadastrados:%d",contador);
+                printf("\n\n\nDeseja continuar?[S/N]");
                 continua = toupper(getch());
                 system("cls");
 
@@ -78,7 +79,7 @@ do{
             do
                 {
                     cabecalho();
-                    printf("\n            Alterar nota de Restaurante ");
+                    printf("\n            Alterar telefone de usuário ");
                     if (vaziaLista(&lista)) {
                          printf("     \n\nCadastro vazio!!!\n\n");
                          system("pause");
@@ -87,29 +88,28 @@ do{
 
                     }
                     else{
-                            imprimeLista(&lista);
-                    printf("\n\n\t Informe nome do restaurante: ");
+                    printf("\n\n\t Informe nome do usuário: ");
                     fflush(stdin);
                     gets(usuario.nome);
                     posicao = buscaLista(usuario, &lista);
                     if(posicao == -1)
-                        printf("\n\t\t Elemento %s NAO existente na lista!\n", usuario.nome);
+                        printf("\n\t\t Usuário %s NAO existente na lista!\n", usuario.nome);
                     else{
-                        printf("\n\t\t Elemento %s encontrado na lista!\n", usuario.nome);
+                        printf("\n\t\t Usuário %s encontrado na lista!\n", usuario.nome);
                         usuario = lista.usuario[posicao];
                        do{
-                        printf("\n\t\tInforme a nova nota:");
+                        printf("\n\t\tInforme o novo telefone:");
                         scanf("%f",&usuario.telefone);
                             if (strlen(usuario.telefone) != 11)
 
 
-                        printf("\n\nA nota tem que está entre 0 a 5.");
+                        printf("\n\nPreencha o campo corretamente.");
 
                        }  while(strlen(usuario.telefone) != 11); ;
                         lista.usuario[posicao] = usuario;
 
                     imprimeLista(&lista);
-                    printf ("\nDeseja alterar nota de  outro restaurante?(S/N) ");
+                    printf ("\nDeseja alterar outro telefone?(S/N) ");
                     continua = toupper(getch());
                 }
                     }
@@ -125,7 +125,7 @@ case '3':{
 
                   do {
                      cabecalho();
-                     printf( "\t                    ::: Excluir Restaurante :::\n\n" );
+                     printf( "\t                    ::: Excluir Usuário :::\n\n" );
 
                      if (vaziaLista(&lista)) {
                          printf("   \n\n  Cadastro vazio!!!\n\n");
@@ -137,12 +137,12 @@ case '3':{
 
                      else{
                          imprimeLista(&lista);
-                         printf("\n   Informe nome do Restaurante a excluir: ");
+                         printf("\n   Informe nome do Usuário a excluir: ");
                          fflush(stdin);
                          gets(usuario.nome);
                          excluiLista (usuario, &lista, &codErro);
                          if (codErro != 0){
-                              printf("\n   Restaurante não existente no cadastro!!!");
+                              printf("\n   Usuário não existente no cadastro!!!");
                          }
 
                          else{
@@ -150,20 +150,20 @@ case '3':{
                          printf("\n   Exclusao realizada com sucesso!!!");
                          imprimeLista(&lista);
                          }
-                         printf("\n\n   Deseja excluir outro Restaurante? (S/N) ");
+                         printf("\n\n   Deseja excluir outro Usuário (S/N) ");
                          continua = getch();
                          fflush(stdin);
                      }
                  } while(continua == 'S' || continua == 's');
                  break;
 }//switch 3
-    case '4':{
+    case '4':{                                                                // Faz busca do usuário pelo nome
 
                     int i;
                     do{
 
                     cabecalho();
-                    printf("\n       Buscar  por Tipo de Restaurante ");
+                    printf("\n       Buscar  por USUÁRIO - NOME ");
 
                     if (vaziaLista(&lista)) {
                          printf("   \n\n  Cadastro vazio!!!\n\n");
@@ -176,25 +176,26 @@ case '3':{
 
 
                     else{
-                            printf("\n\nInforme o nome COMPLETO do usuário:");
+                            printf("\n\nInforme o nome do usuário:");
                              fflush(stdin);
                             gets(usuario.nome);
 
                          for(i=0;i<=lista.tamanho-1;i++){
                                 if(strcmp(lista.usuario[i].nome,usuario.nome)==0){
 
-                                       printf("\n\t Elemento %s encontrado na lista!\n", usuario.nome);
-                                       printf("\n\t Restaurante: %s \n Endereço %s \n Cozinha %s \n nota %s",lista.usuario[i].nome,lista.usuario[i].endereco,
+                                       printf("\n\t Usuário %s encontrado na lista!\n", usuario.nome);
+                                       printf("\n\t Nome: %s \n E-mail: %s\n Telefone: %s",lista.usuario[i].nome,
                                         lista.usuario[i].telefone);
 
                                 }
 
                          }
+                         printf("\n\nUsuário NAO encontrado na lista!\n\n");
 
 
                     }
-                    imprimeLista(&lista);
-                    printf("\nDeseja buscar outro restaurante?");
+                    //imprimeLista(&lista);
+                    printf("\nDeseja buscar outro USUÁRIO?[S/N]");
                     continua = toupper(getch());
                     fflush(stdin);
 
@@ -209,7 +210,7 @@ system("cls");
 do {
                      cabecalho();
                      int i;
-                     printf( "\t                    ::: Nota do Restaurante :::\n\n" );
+                     printf( "\t                    ::: Pesquisa de USUÁRIO - TELEFONE :::\n\n" );
                      if (vaziaLista(&lista)) {
                          printf("     Cadastro vazio!!!\n\n");
                          system("pause");
@@ -221,11 +222,11 @@ do {
                          scanf("%f",&usuario.telefone);
                          for(i = 0; i <=lista.tamanho-1; i++ ){
                             if(lista.usuario[i].telefone == usuario.telefone)
-                                printf("\n Restaurante : %s \n endereco : %s \n Tipo de cozinha : %s  \n nota : %s \n" ,lista.usuario[i].nome, lista.usuario[i].endereco,
-                                       lista.usuario[i].telefone );
-
+                            printf("\n\t Nome: %s \n E-mail: %s \n Endereço: %s \n Telefone: %s",lista.usuario[i].nome,lista.usuario[i].endereco,
+                                        lista.usuario[i].telefone);
+                            
                                        else{
-                                        printf("\n\t Elemento NAO encontrado na lista!\n");
+                                        printf("\n\t Usuário NAO encontrado na lista!\n");
                                        }
 
 
@@ -238,7 +239,39 @@ do {
                  break;
 
     }//switch 5
-       case '0':
+       
+	   case '6':
+        {
+                    cabecalho();
+                    printf("\n            Campo de divulgação ");
+                    if (vaziaLista(&lista)) {
+                         printf("     \n\nCadastro vazio!!!\n\n");
+                         system("pause");
+                         continua = 'N';
+
+
+                    }
+                    else{
+                    printf("\n\nInforme a mensagem:\t");
+                    fflush(stdin);
+                    scanf("%s",&mensagem);
+                    printf("\n\nTodos os usuário cadastrados no sistema receberão a mensagem. \nDeseja continuar? [S/N] !!!\n\n");
+                         continua = toupper(getch());
+                         if(continua =='S'){
+						 
+                    
+                     printf("     \n\nMensagem enviada com SUCESSO.\n\n");
+                         system("pause");
+              
+		}
+		else {
+			printf("Mensagem não enviada.");
+		}
+			
+        }
+    }
+	   
+	    case '0':
         case 'f':
         case 'F':
         {
@@ -264,21 +297,22 @@ void cabecalho ()
     system("cls");
     printf("\n");
     printf(" |===========================================================================|\n");
-    printf(" |  UPIS - Sistemas de Informacao                PE- Projeto Integrado |\n");
-    printf(" |  Alunos: Pedro Lucas Furtado/Pedro Henrique/ Eloy Duque              |\n");
+    printf(" |  UPIS - Sistemas de Informacao                PE- Projeto Integrado       |\n");
+    printf(" |  Alunos: Pedro Lucas Furtado/Pedro Henrique/ Eloy Duque                   |\n");
     printf(" |===========================================================================|\n");
 }
 //==============================================================================
 void menu ()
 {
 
-    printf("\n\t     |                  Divulgação em Massa              |");
+    printf("\n\t     |                  DIVULGAÇÃO EM MASSA              |");
     printf("\n\t     | = = = = = = = = MENU  PRINCIPAL = = = = = = = = = |");
     printf("\n\t     |             1 - Cadastrar Usuário                 |");
     printf("\n\t     |             2 - Modificar telefone do usuário     |");
     printf("\n\t     |             3 - Excluir Usuário                   |");
-    printf("\n\t     |             4 - Listar  por tipo                  |");//restaurante
-    printf("\n\t     |             5 - Listar usuário por telefone       |");
+    printf("\n\t     |             4 - Pesquisar - NOME                  |");
+    printf("\n\t     |             5 - Pesquiar - Telefone               |");
+    printf("\n\t     |             6 - Inserir Mensagem                  |");
     printf("\n\t     |             0 - Encerrar aplicativo               |");
     printf("\n\t     | = = = = = = = = = = = = = = = = = = = = = = = = = |\n");
     printf("\n\t                       Escolha uma opcao: ");
